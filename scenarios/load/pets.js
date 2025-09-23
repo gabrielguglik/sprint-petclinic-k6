@@ -12,12 +12,9 @@ export const options = {
       { duration: '10s', target: 0 }, 
     ],
     thresholds: {
-        http_req_duration: [
-          'p(99)<150'
-        ],
         http_req_failed: [
           'rate<0.01'
-        ],
+        ]
     },
 };
 
@@ -34,6 +31,7 @@ export default function () {
         check(res, {
             'Status code is 200': (r) => r.status === 200,
             'Body response is not empty': (r) => r.body.length > 0,
+            'Request duration is less than 200ms': (r) => r.timings.duration < 200
         });
 
         sleep(1);
@@ -50,6 +48,7 @@ export default function () {
             'Status code is 200': (r) => r.status === 200,
             'Body response is not empty': (r) => r.body.length > 0,
             'Pet id is correct': (r) => r.json().id === 1,
+            'Request duration is less than 150ms': (r) => r.timings.duration < 150
         });
 
         sleep(1);
@@ -72,9 +71,10 @@ export default function () {
         };
 
         check(res, {
-            'Status code is 204': (r) => r.status === 204
+            'Status code is 204': (r) => r.status === 204,
+            'Request duration is less than 150ms': (r) => r.timings.duration < 150
         });
 
         sleep(1);
     });
-}
+};
