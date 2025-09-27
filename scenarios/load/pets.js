@@ -29,9 +29,9 @@ export default function () {
         };
 
         check(res, {
-            'Status code is 200': (r) => r.status === 200,
-            'Body response is not empty': (r) => r.body.length > 0,
-            'Request duration is less than 200ms': (r) => r.timings.duration < 200
+            'Retrieved all pets with success (200)': (r) => r.status === 200,
+            '01. Body response is not empty': (r) => r.body.length > 0,
+            '01. Request duration is less than 200ms': (r) => r.timings.duration < 200
         });
 
         sleep(1);
@@ -45,10 +45,10 @@ export default function () {
         };
 
         check(res, {
-            'Status code is 200': (r) => r.status === 200,
-            'Body response is not empty': (r) => r.body.length > 0,
-            'Pet id is correct': (r) => r.json().id === 1,
-            'Request duration is less than 150ms': (r) => r.timings.duration < 150
+            'Got a pet by ID with success (200)': (r) => r.status === 200,
+            '02. Body response is not empty': (r) => r.body.length > 0,
+            '02. Pet id is correct': (r) => r.json().id === 1,
+            '02. Request duration is less than 150ms': (r) => r.timings.duration < 150
         });
 
         sleep(1);
@@ -71,10 +71,30 @@ export default function () {
         };
 
         check(res, {
-            'Status code is 204': (r) => r.status === 204,
-            'Request duration is less than 150ms': (r) => r.timings.duration < 150
+            'Updated pet details with success (204)': (r) => r.status === 204,
+            '03. Request duration is less than 200ms': (r) => r.timings.duration < 200
         });
 
         sleep(1);
     });
+
+    // group('04. Delete a pet', function () {
+    //     let petId = 1;
+
+    //     const res = http.delete(`${url}/${petId}`, { headers: authHeaders });
+    
+    //     if (res.status !== 204) {
+    //         console.error(`${url} Failed. Status: ${res.status}`);
+    //     };
+    
+    //     check(res, {
+    //         'Deleted a pet with success (204)': (r) => r.status === 204,
+    //         '04. Request duration is less than 150ms': (r) => r.timings.duration < 150
+    //     });
+
+    //     petId++;
+    
+    //     sleep(1);
+    // });
+
 };
